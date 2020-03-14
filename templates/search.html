@@ -1,0 +1,110 @@
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+{{ form.autocomp2.label }}: {{ form.autocomp2 }}
+{{ form.autocomp.label }}: {{ form.autocomp }}
+
+<table id="records_table" border="1">
+    <thead><td>Laboratory Name</td><td>City</td><td>State</td></thead>
+</table>
+<script>
+    $(function() {
+        $( "#autocity" ).focusout(function(event,data) {
+            console.log($("#autocity").val())
+            city = $("#autocity").val();
+            if(city){
+                populateCityData(city)
+            }
+        });
+        $( "#autostate" ).focusout(function(event,data) {
+            console.log($("#autostate").val())
+            st = $("#autostate").val();
+            if(st){
+                handleCity(st)
+            }
+        });
+        $("#autostate").autocomplete({  
+            change: function(event, ui) {
+                if(ui.item)
+                    handleCity(ui.item.label);
+            },
+            select: function(event, ui) {
+                if(ui.item)
+                    handleCity(ui.item.label);
+            }
+        });
+        function populateCityData(city) {
+            console.log(city);
+            data = JSON.stringify({'state': null, 'city': city})
+    
+            if(city){
+                $.ajax({
+                dataType: 'json',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/getlist",
+                data: data,
+                success: function (response) {
+                    // console.log(response.results)
+                    var trHTML = '';
+                    $.each(response, function (i, item) {
+                        $.each(item,function (i, row){
+                            console.log(row)
+                            trHTML += '<tr><td>' + row["Laboratory Name"] + '</td><td>' + row["City"] + '</td><td>' + row["State"]+ '</td></tr>';
+                        });
+                        
+                        
+                    });
+                    $('#records_table').append(trHTML);
+                }
+                
+                });
+            }
+            
+        }
+        function handleCity(params) {
+            // console.log(params.item.label);
+            if(params){
+                $.ajax({
+                url: '/getcityfromstate?state='+params
+                }).done(function (data) {
+                    console.log(data)
+                    if(data.results.length>0){
+                        $('#autocity').autocomplete({
+                        source: data.results,
+                        minLength: 1
+                        });
+                    }
+                    
+                });
+            }
+            
+        }
+        $.ajax({
+            url: '/getcity?city=ALL'
+            }).done(function (data) {
+                console.log(data)
+                $('#autocity').autocomplete({
+                    source: data.results,
+                    minLength: 2
+                });
+            });
+        $.ajax({
+        url: '/getstate?state=ALL'
+        }).done(function (data) {
+            console.log(data)
+            $('#autostate').autocomplete({
+                source: data.results,
+                minLength: 1
+            });
+        });
+
+        $.curCSS = function (element, attrib, val) {
+            $(element).css(attrib, val);
+        };
+        });
+</script>

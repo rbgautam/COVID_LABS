@@ -33,6 +33,17 @@ def read_city_from_csv(city):
     # print(result)
     # result = jsonify_result(result)
     return result
+
+def read_city_from_state(state):
+    if state != None:
+        result = csv_data[csv_data['State'].str.startswith(state.upper())] 
+    else:
+        return csv_data['City'].unique().tolist()
+    result = result['City'].unique().tolist()
+    # print(result)
+    # result = jsonify_result(result)
+    return result
+
 # Returns a list of states matching a pattern        
 def read_state_from_csv(state):
     if state != None:
@@ -72,5 +83,5 @@ def read_state_city_data(state,city):
 def jsonify_result(df):
     return json.loads(df.to_json(orient='records'))
 if __name__ == "__main__":
-    read_from_csv(None,"cas")
+    print(read_city_from_csv("chicago"))
     

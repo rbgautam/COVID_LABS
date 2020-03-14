@@ -33,8 +33,8 @@ def test_response():
     # print(results['city'],",",results['state'])
 def test_city_response():
     # local url
-    url = 'http://127.0.0.1:5000/getcity?city=nap' # change to your url
-    # url = 'https://covidtestinglabsus.herokuapp.com/getlist' # change to your url
+    # url = 'http://127.0.0.1:5000/getcity?city=nap' # change to your url
+    url = 'https://covidtestinglabsus.herokuapp.com/getcity?city=ALL' # change to your url
     send_request = requests.get(url)
     # print(results)
     res_data = send_request.json()
@@ -43,8 +43,18 @@ def test_city_response():
     # print(results['city'],",",results['state'])
 def test_state_response():
     # local url
-    url = 'http://127.0.0.1:5000/getstate?state=ALL' # change to your url
-    # url = 'https://covidtestinglabsus.herokuapp.com/getlist' # change to your url
+    # url = 'http://127.0.0.1:5000/getstate?state=ALL' # change to your url
+    url = 'https://covidtestinglabsus.herokuapp.com/getstate?state=ALL' # change to your url
+    send_request = requests.get(url)
+    # print(results)
+    res_data = send_request.json()
+    # results= res_data['results']
+    print(res_data)
+    # print(results['city'],",",results['state'])
+def test_city_state_response():
+    # local url
+    url = 'http://127.0.0.1:5000/getcityfromstate?state=ia' # change to your url
+    # url = 'https://covidtestinglabsus.herokuapp.com/getstate?state=ALL' # change to your url
     send_request = requests.get(url)
     # print(results)
     res_data = send_request.json()
@@ -52,4 +62,4 @@ def test_state_response():
     print(res_data)
     # print(results['city'],",",results['state'])
 if __name__== "__main__":
-  test_state_response()
+  test_city_state_response()

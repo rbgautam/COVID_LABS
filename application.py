@@ -1,15 +1,31 @@
 import pandas as pd
-from flask import Flask, jsonify, request
-from dataaccess  import read_from_csv,read_city_from_csv,read_state_from_csv
-
+from flask import Flask, jsonify, request,render_template
+from dataaccess  import read_from_csv,read_city_from_csv,read_state_from_csv,read_city_from_state
+from wtforms import TextField, Form
+from flask_cors import CORS
 
 # app
 app = Flask(__name__)
 
+class SearchForm(Form):
+    autocomp= TextField('City',id='autocity')
+    autocomp2= TextField('State',id='autostate')
 # routes
-@app.route('/', methods=['GET'])
-def hello():
-    return "Get list of Covid-19 testing Labs in US"
+@app.route('/')
+def searchform():
+    form = SearchForm(request.form)
+    return render_template("search.html",form=form)
+
+@app.route("/chart")
+def chart():
+    legend = 'Monthly Data'
+    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
+    values = [10, 9, 8, 7, 6, 4, 7, 8]
+    return render_template('chart.html', values=values, labels=labels, legend=legend)
+
+# @app.route('/', methods=['GET'])
+# def hello():
+#     return "Get list of Covid-19 testing Labs in US"
     
 @app.route('/getlist', methods=['POST'])
 
@@ -58,5 +74,12 @@ def get_state_list():
     # print(output)
     # return data
     return jsonify(results=output)
+
+@app.route('/getcityfromstate', methods=['GET'])
+def get_city_from_state_list():
+    data = request.args.get('state') 
+    result = read_city_from_state(data)
+    return jsonify(results=result)
+
 if __name__ == '__main__':
     app.run(port = 5000, debug=True)
