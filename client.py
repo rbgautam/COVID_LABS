@@ -5,8 +5,8 @@ import requests
 
 def test_response():
     # local url
-    url = 'http://127.0.0.1:5000/getlist' # change to your url
-    # url = 'https://rbgautammlapi.herokuapp.com/predict' # change to your url
+    # url = 'http://127.0.0.1:5000/getlist' # change to your url
+    url = 'https://covidtestinglabsus.herokuapp.com/getlist' # change to your url
     # sample data
     data = {'state': None
         , 'city': 'cas'
