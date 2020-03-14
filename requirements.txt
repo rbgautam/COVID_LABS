@@ -1,7 +1,7 @@
 
 beautifulsoup4==4.6.0
 docutils==0.14
-Flask==0.10.1
+Flask==1.0
 Jinja2==2.10
 jmespath==0.9.3
 lxml==4.5.0
