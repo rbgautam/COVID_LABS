@@ -1,6 +1,6 @@
 import pandas as pd
 from flask import Flask, jsonify, request
-from dataaccess  import read_city_data,read_state_data,read_state_city_data
+from dataaccess  import read_from_csv
 
 
 # app
@@ -17,16 +17,17 @@ def get_list():
     # get data
     data = request.get_json(force=True)
 
-    print(data)
+    # print(data)
 
-    # predictions
-    # result = model.predict(data_df)
-
+    # List of Labs
+    result = read_from_csv(data['state'],data['city'])
+    # print(result)
     # send back to browser
-    output = data
-
+    output = result
+    # print(output)
     # return data
     return jsonify(results=output)
+    # return output
 
 if __name__ == '__main__':
     app.run(port = 5000, debug=True)

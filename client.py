@@ -8,15 +8,15 @@ def test_response():
     url = 'http://127.0.0.1:5000/getlist' # change to your url
     # url = 'https://rbgautammlapi.herokuapp.com/predict' # change to your url
     # sample data
-    data = {'state': 'IL'
-        , 'city': 'naperville'
+    data = {'state': None
+        , 'city': 'cas'
         }
     data = json.dumps(data)
     send_request = requests.post(url,data)
-
+    # print(results)
     res_data = send_request.json()
-    results= res_data['results']
-    print(results)
+    # results= res_data['results']
+    print(res_data)
     # print(results['city'],",",results['state'])
 
 if __name__== "__main__":
