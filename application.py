@@ -1,6 +1,6 @@
 import pandas as pd
 from flask import Flask, jsonify, request
-from dataaccess  import read_from_csv
+from dataaccess  import read_from_csv,read_city_from_csv,read_state_from_csv
 
 
 # app
@@ -17,7 +17,7 @@ def get_list():
     # get data
     data = request.get_json(force=True)
 
-    # print(data)
+    print(data)
 
     # List of Labs
     result = read_from_csv(data['state'],data['city'])
@@ -27,7 +27,36 @@ def get_list():
     # print(output)
     # return data
     return jsonify(results=output)
-    # return output
+@app.route('/getcity', methods=['GET'])
+def get_city_list():
+    print(type(request.args))
+    
+    data = request.args.get('city')    
+    if data == 'ALL':
+        data = None
+    # print(data)
+    # List of Labs
+    result = read_city_from_csv(data)
+    # print(result)
+    # send back to browser
+    output = result
+    # print(output)
+    # return data
+    return jsonify(results=output)
 
+@app.route('/getstate', methods=['GET'])
+def get_state_list():
+    data = request.args.get('state') 
+    if data == 'ALL':
+        data = None   
+    # print(data)
+    # List of Labs
+    result = read_state_from_csv(data)
+    # print(result)
+    # send back to browser
+    output = result
+    # print(output)
+    # return data
+    return jsonify(results=output)
 if __name__ == '__main__':
     app.run(port = 5000, debug=True)

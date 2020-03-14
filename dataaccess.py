@@ -23,6 +23,27 @@ def read_from_csv(state,city):
     except Exception as ex:
         print(ex)
 
+# Returns a list of cities matching a pattern        
+def read_city_from_csv(city):
+    if city != None:
+        result = csv_data[csv_data['City'].str.startswith(city.upper())] 
+    else:
+        return csv_data['City'].unique().tolist()
+    result = result['City'].unique().tolist()
+    # print(result)
+    # result = jsonify_result(result)
+    return result
+# Returns a list of states matching a pattern        
+def read_state_from_csv(state):
+    if state != None:
+        result = csv_data[csv_data['State'].str.startswith(state.upper())] 
+    else:
+        return csv_data['State'].unique().tolist()
+    result = result['State'].unique().tolist()
+    # print(result)
+    # result = jsonify_result(result)
+    return result
+
 def read_city_data(city):
     result = csv_data[csv_data['City'].str.contains(city.upper())] 
     result = jsonify_result(result)
