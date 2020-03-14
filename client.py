@@ -5,8 +5,8 @@ import requests
 
 def test_response():
     # local url
-    url = 'http://127.0.0.1:5000/getlist' # change to your url
-    # url = 'https://covidtestinglabsus.herokuapp.com/getlist' # change to your url
+    # url = 'http://127.0.0.1:5000/getlist' # change to your url
+    url = 'https://covidtestinglabsus.herokuapp.com/getlist' # change to your url
     # sample data
     #sample 1 NO Data
     # data = {'state': None
@@ -20,6 +20,10 @@ def test_response():
     data = {'state': "IL"
         , 'city': "chi"
         }
+    #Sample 4 City wise looks for pattern in city names
+    # data = {'state': None
+    #     , 'city': "chi"
+    #     }
     data = json.dumps(data)
     send_request = requests.post(url,data)
     # print(results)
