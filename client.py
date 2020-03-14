@@ -16,8 +16,8 @@ def test_response():
 
     res_data = send_request.json()
     results= res_data['results']
-    # print(send_request.json())
-    print(results['city'],",",results['state'])
+    print(results)
+    # print(results['city'],",",results['state'])
 
 if __name__== "__main__":
   test_response()
