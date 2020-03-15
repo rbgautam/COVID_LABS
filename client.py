@@ -17,13 +17,13 @@ def test_response():
     #     , 'city': None
     #     }
     #Sample 3 City wise looks for pattern in city names
-    data = {'state': "IL"
-        , 'city': "chi"
-        }
-    #Sample 4 City wise looks for pattern in city names
-    # data = {'state': None
+    # data = {'state': "IL"
     #     , 'city': "chi"
     #     }
+    #Sample 4 City wise looks for pattern in city names
+    data = {'state': None
+        , 'city': "chicago"
+        }
     data = json.dumps(data)
     send_request = requests.post(url,data)
     # print(results)
@@ -62,4 +62,4 @@ def test_city_state_response():
     print(res_data)
     # print(results['city'],",",results['state'])
 if __name__== "__main__":
-  test_city_state_response()
+  test_response()

@@ -7,9 +7,10 @@
 
 {{ form.autocomp2.label }}: {{ form.autocomp2 }}
 {{ form.autocomp.label }}: {{ form.autocomp }}
-
-<table id="records_table" border="1">
-    <thead><td>Laboratory Name</td><td>City</td><td>State</td></thead>
+<br/><br/>
+<hr/>
+<table id="records_table">
+    
 </table>
 <script>
     $(function() {
@@ -51,7 +52,9 @@
                 success: function (response) {
                     // console.log(response.results)
                     var trHTML = '';
+                    $('#records_table tr').remove()
                     $.each(response, function (i, item) {
+                        trHTML += "<thead><td>Laboratory Name</td><td>City</td><td>State</td></thead>";
                         $.each(item,function (i, row){
                             console.log(row)
                             trHTML += '<tr><td>' + row["Laboratory Name"] + '</td><td>' + row["City"] + '</td><td>' + row["State"]+ '</td></tr>';
