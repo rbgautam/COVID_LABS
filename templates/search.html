@@ -1,5 +1,28 @@
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+    
+    <link rel= "icon" type= "image/png" href= "{{ url_for('static',filename='images/icons/favicon.ico') }}">
+<!--===============================================================================================-->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+<!--===============================================================================================-->
+	
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/vendor/bootstrap/css/bootstrap.min.css') }}">
+<!--===============================================================================================-->
+    
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/vendor/animate/animate.css') }}">
+<!--===============================================================================================-->
+   
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/vendor/select2/select2.min.css') }}">
+<!--===============================================================================================-->
+    
+    
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/vendor/select2/select2.min.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/vendor/perfect-scrollbar/perfect-scrollbar.css') }}">
+<!--===============================================================================================-->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/util.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -9,9 +32,25 @@
 {{ form.autocomp.label }}: {{ form.autocomp }}
 <br/><br/>
 <hr/>
-<table id="records_table">
-    
-</table>
+<div class="table100 ver1 m-b-110">
+    <div class="table100-head">
+        <table>
+            <thead>
+                <tr class="row100 head">
+                    <th class="cell100 column1">Laboratory Name</th>
+                    <th class="cell100 column2">City</th>
+                    <th class="cell100 column3">State</th>
+                    
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="table100-body js-pscroll">
+        <table id="records_table">
+            
+        </table>
+    </div>
+</div>
 <script>
     $(function() {
         $( "#autocity" ).focusout(function(event,data) {
@@ -54,10 +93,10 @@
                     var trHTML = '';
                     $('#records_table tr').remove()
                     $.each(response, function (i, item) {
-                        trHTML += "<thead><td>Laboratory Name</td><td>City</td><td>State</td></thead>";
+                        // trHTML += "<thead><td>Laboratory Name</td><td>City</td><td>State</td></thead>";
                         $.each(item,function (i, row){
                             console.log(row)
-                            trHTML += '<tr><td>' + row["Laboratory Name"] + '</td><td>' + row["City"] + '</td><td>' + row["State"]+ '</td></tr>';
+                            trHTML += '<tr class="row100 body"><td class="cell100 column1">' + row["Laboratory Name"] + '</td><td class="cell100 column2">' + row["City"] + '</td><td class="cell100 column3">' + row["State"]+ '</td></tr>';
                         });
                         
                         
