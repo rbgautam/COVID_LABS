@@ -28,8 +28,23 @@
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
-{{ form.autocomp2.label }}: {{ form.autocomp2 }}
-{{ form.autocomp.label }}: {{ form.autocomp }}
+<!-- {{ form.autocomp2.label }}: {{ form.autocomp2 }}
+{{ form.autocomp.label }}: {{ form.autocomp }} -->
+<form>
+    <fieldset>
+       <legend>Select State and City</legend>
+       <p>
+          <label>Select State</label>
+          <select id = "stateList">
+           
+          </select>
+          <label>Select City</label>
+          <select id = "cityList">
+           
+          </select>
+       </p>
+    </fieldset>
+ </form>
 <br/><br/>
 <hr/>
 <!-- <img id='locMap' src='https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44'/>
@@ -62,23 +77,23 @@
                 populateCityData(city)
             }
         });
-        $( "#autostate" ).focusout(function(event,data) {
-            console.log($("#autostate").val())
-            st = $("#autostate").val();
+        $( "#stateList" ).focusout(function(event,data) {
+            console.log($("#stateList").val())
+            st = $("#stateList").val();
             if(st){
                 handleCity(st)
             }
         });
-        $("#autostate").autocomplete({  
-            change: function(event, ui) {
-                if(ui.item)
-                    handleCity(ui.item.label);
-            },
-            select: function(event, ui) {
-                if(ui.item)
-                    handleCity(ui.item.label);
-            }
-        });
+        // $("#stateList").autocomplete({  
+        //     change: function(event, ui) {
+        //         if(ui.item)
+        //             handleCity(ui.item.label);
+        //     },
+        //     select: function(event, ui) {
+        //         if(ui.item)
+        //             handleCity(ui.item.label);
+        //     }
+        // });
         function disableClick() {
             $("a").click(function(e) {
             
@@ -145,14 +160,9 @@
                 $.ajax({
                 url: '/getcityfromstate?state='+params
                 }).done(function (data) {
-                    console.log(data)
-                    if(data.results.length>0){
-                        $('#autocity').autocomplete({
-                        source: data.results,
-                        minLength: 1
-                        });
-                    }
-                    
+                    // console.log(data)
+                    $('#cityList').empty()
+                    populateCitySelect(data.results);
                 });
             }
             
@@ -160,20 +170,53 @@
         $.ajax({
             url: '/getcity?city=ALL'
             }).done(function (data) {
-                console.log(data)
-                $('#autocity').autocomplete({
-                    source: data.results,
-                    minLength: 2
-                });
+                // console.log(data)
+                populateCitySelect(data.results);
             });
+        
+        
+
+        function populateStateSelect(items) {
+            $.each(items, function (i, item) {
+            console.log(item)
+            $('#stateList').append($('<option>', { 
+                value: item,
+                text : item
+                }));
+            });
+        }
+
+        $( "#cityList" ).change(function() {
+            city = $("#cityList").val();
+            if(city){
+                populateCityData(city)
+            }
+        });
+
+        $( "#stateList" ).change(function() {
+            console.log($("#stateList").val())
+            st = $("#stateList").val();
+            if(st){
+                handleCity(st)
+            }
+        });
+
+        function populateCitySelect(items) {
+            $.each(items, function (i, item) {
+            // console.log(item)
+            $('#cityList').append($('<option>', { 
+                value: item,
+                text : item
+                }));
+            });
+        }
+
         $.ajax({
         url: '/getstate?state=ALL'
         }).done(function (data) {
             console.log(data)
-            $('#autostate').autocomplete({
-                source: data.results,
-                minLength: 1
-            });
+            
+            populateStateSelect(data.results);
         });
 
         $.curCSS = function (element, attrib, val) {
