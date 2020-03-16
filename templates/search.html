@@ -47,7 +47,7 @@
  </form>
 <br/><br/>
 <hr/>
-<!-- <img id='locMap' src='https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44'/>
+<!-- <img id='locMap' src='https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=[replace_key]'/>
 <hr/> -->
 <div class="table100 ver1 m-b-110">
     <div class="table100-head">
@@ -55,8 +55,10 @@
             <thead>
                 <tr class="row100 head">
                     <th class="cell100 column1">Laboratory Name</th>
-                    <th class="cell100 column2">City</th>
-                    <th class="cell100 column3">State</th>
+                    <th class="cell100 column2">Address</th> 
+                    <th class="cell100 column3">City</th>
+                    <th class="cell100 column4">State</th>
+                    <!-- <th class="cell100 column5">Zip</th>  -->
                     <!-- <th class="cell100 column4">Map</th> -->
                 </tr>
             </thead>
@@ -135,8 +137,9 @@
                             google = encodeURI('https://maps.googleapis.com/maps/api/staticmap?center="'+address+'"&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44');
                             console.log(google)
                             
-                            trHTML += '<tr class="row100 body"><td class="cell100 column1">' + row["Laboratory Name"] + '</td><td class="cell100 column2">' + row["City"] + '</td><td class="cell100 column3">' + row["State"]+ '</td>';
-                            // trHTML +="<td class='cell100 column1'><a href='"+google+"' onclick='disableClick()' >Directions</a></td>"
+                            trHTML += '<tr class="row100 body"><td class="cell100 column1">' + row["Laboratory Name"] +'</td><td class="cell100 column2">' + row["Formatted_address"] + '</td><td class="cell100 column3">' + row["City"] + '</td><td class="cell100 column4">' + row["State"]+ '</td>';
+                            // trHTML +="<td class='cell100 column5'><a href='"+google+"' onclick='disableClick()' >Directions</a></td>"
+                            // trHTML += '<td class="cell100 column5">' + row["Zip_code"] +'</td>'
                             trHTML +="</tr>";
                         });
                         
@@ -155,6 +158,19 @@
         });
 
         function handleCity(params) {
+            // console.log(params.item.label);
+            if(params){
+                $.ajax({
+                url: '/getcityfromstate?state='+params
+                }).done(function (data) {
+                    // console.log(data)
+                    $('#cityList').empty()
+                    populateCitySelect(data.results);
+                });
+            }
+            
+        }
+        function handleState(city) {
             // console.log(params.item.label);
             if(params){
                 $.ajax({
@@ -188,7 +204,7 @@
 
         $( "#cityList" ).change(function() {
             city = $("#cityList").val();
-            if(city){
+            if(city && state){
                 populateCityData(city)
             }
         });

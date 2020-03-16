@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-file_path = "us_labs.csv"
+file_path = "us_labs_data.csv"
 csv_data = pd.read_csv(file_path)
 
 def read_from_csv(state,city):
