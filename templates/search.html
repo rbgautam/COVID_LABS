@@ -36,7 +36,7 @@
        <p>
           <label>Select State</label>
           <select id = "stateList">
-           
+            <option value="0">Select</option>
           </select>
           <label>Select City</label>
           <select id = "cityList">
@@ -204,7 +204,7 @@
 
         $( "#cityList" ).change(function() {
             city = $("#cityList").val();
-            if(city && state){
+            if(city){
                 populateCityData(city)
             }
         });
@@ -218,6 +218,11 @@
         });
 
         function populateCitySelect(items) {
+            
+            $('#cityList').append($('<option>', { 
+                value: "0",
+                text : "Select"
+            }));
             $.each(items, function (i, item) {
             // console.log(item)
             $('#cityList').append($('<option>', { 
