@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "743a1ddf-4547-4cd9-99f6-5001610863a2",
+		"name": "Covid_labs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getlist_state_city",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "datatype",
+						"value": "JSON",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"state\": \"IL\",\n \"city\": \"chicago\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covidtestinglabsus.herokuapp.com/getlist",
+					"protocol": "https",
+					"host": [
+						"covidtestinglabsus",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"getlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getlist_city_nostate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "datatype",
+						"value": "JSON",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"state\": null,\n \"city\": \"chicago\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covidtestinglabsus.herokuapp.com/getlist",
+					"protocol": "https",
+					"host": [
+						"covidtestinglabsus",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"getlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getlist_state_nocity",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "datatype",
+						"value": "JSON",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"state\": \"IL\",\n \"city\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covidtestinglabsus.herokuapp.com/getlist",
+					"protocol": "https",
+					"host": [
+						"covidtestinglabsus",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"getlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getlist_nostate_nocity",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "datatype",
+						"value": "JSON",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"state\": null,\n \"city\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covidtestinglabsus.herokuapp.com/getlist",
+					"protocol": "https",
+					"host": [
+						"covidtestinglabsus",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"getlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ALL_citylist",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "datatype",
+						"value": "JSON",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covidtestinglabsus.herokuapp.com/getcity?city=ALL",
+					"protocol": "https",
+					"host": [
+						"covidtestinglabsus",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"getcity"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "ALL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ALL_Statelist",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "datatype",
+						"value": "JSON",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covidtestinglabsus.herokuapp.com/getstate",
+					"protocol": "https",
+					"host": [
+						"covidtestinglabsus",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"getstate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_ALL_city_for_State",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "datatype",
+						"value": "JSON",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://covidtestinglabsus.herokuapp.com/getcityfromstate?state=IL",
+					"protocol": "https",
+					"host": [
+						"covidtestinglabsus",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"getcityfromstate"
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "IL"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

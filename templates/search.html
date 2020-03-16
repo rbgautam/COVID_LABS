@@ -32,6 +32,8 @@
 {{ form.autocomp.label }}: {{ form.autocomp }}
 <br/><br/>
 <hr/>
+<!-- <img id='locMap' src='https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44'/>
+<hr/> -->
 <div class="table100 ver1 m-b-110">
     <div class="table100-head">
         <table>
@@ -40,7 +42,7 @@
                     <th class="cell100 column1">Laboratory Name</th>
                     <th class="cell100 column2">City</th>
                     <th class="cell100 column3">State</th>
-                    
+                    <!-- <th class="cell100 column4">Map</th> -->
                 </tr>
             </thead>
         </table>
@@ -77,6 +79,24 @@
                     handleCity(ui.item.label);
             }
         });
+        function disableClick() {
+            $("a").click(function(e) {
+            
+            e.stopImmediatePropagation();
+        
+            console.log("a clicked");
+            // $( "<div>" )
+            //     .append( "default " + event.type + " prevented" )
+            //     .appendTo( "#log" );
+            return false;
+            });
+        }
+      
+        function showMap(address) {
+            console.log(address);
+            $("#locMap").src = address;
+        }
+
         function populateCityData(city) {
             console.log(city);
             data = JSON.stringify({'state': null, 'city': city})
@@ -95,8 +115,14 @@
                     $.each(response, function (i, item) {
                         // trHTML += "<thead><td>Laboratory Name</td><td>City</td><td>State</td></thead>";
                         $.each(item,function (i, row){
-                            console.log(row)
-                            trHTML += '<tr class="row100 body"><td class="cell100 column1">' + row["Laboratory Name"] + '</td><td class="cell100 column2">' + row["City"] + '</td><td class="cell100 column3">' + row["State"]+ '</td></tr>';
+                            address = row["Laboratory Name"]+","+row["City"]+","+row["State"]
+                           
+                            google = encodeURI('https://maps.googleapis.com/maps/api/staticmap?center="'+address+'"&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44');
+                            console.log(google)
+                            
+                            trHTML += '<tr class="row100 body"><td class="cell100 column1">' + row["Laboratory Name"] + '</td><td class="cell100 column2">' + row["City"] + '</td><td class="cell100 column3">' + row["State"]+ '</td>';
+                            // trHTML +="<td class='cell100 column1'><a href='"+google+"' onclick='disableClick()' >Directions</a></td>"
+                            trHTML +="</tr>";
                         });
                         
                         
@@ -108,6 +134,11 @@
             }
             
         }
+
+        $(document).ready(function(){
+            disableClick();
+        });
+
         function handleCity(params) {
             // console.log(params.item.label);
             if(params){
