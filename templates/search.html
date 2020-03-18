@@ -48,7 +48,7 @@
                 <option value="0">Select</option>
             </select>
             <label>Select City</label>
-            <select id = "cityList">
+            <select id = "cityList" disabled >
             
             </select>
         </p>
@@ -109,9 +109,20 @@
             document.getElementById('map'), {zoom: 20, center: center});
         //Create LatLngBounds object.
         var latlngbounds = new google.maps.LatLngBounds();
+        //Used by click listner
+        var infoWindow = new google.maps.InfoWindow();
         pin_marker_collection.forEach(element => {
             var latlng = new google.maps.LatLng(element.lat, element.lng);
             var marker = new google.maps.Marker({position: latlng, map: map,title:element.title});
+            
+            (function (marker, element) {
+                console.log(element)
+                google.maps.event.addListener(marker, "click", function (e) {
+                    infoWindow.setContent("<div style = 'width:200px;min-height:40px'>" + element.title +"<br/>"+element.address +"</br>"+element.directions+"</div>");
+                    infoWindow.open(map, marker);
+                });
+            })(marker, element);
+
             latlngbounds.extend(marker.position);
         });
 
@@ -135,16 +146,7 @@
                 handleCity(st)
             }
         });
-        // $("#stateList").autocomplete({  
-        //     change: function(event, ui) {
-        //         if(ui.item)
-        //             handleCity(ui.item.label);
-        //     },
-        //     select: function(event, ui) {
-        //         if(ui.item)
-        //             handleCity(ui.item.label);
-        //     }
-        // });
+       
         function disableClick() {
             $("a").click(function(e) {
             
@@ -163,9 +165,9 @@
             $("#locMap").src = address;
         }
 
-        function populateCityData(city) {
+        function populateCityData(city,state) {
             console.log(city);
-            data = JSON.stringify({'state': null, 'city': city})
+            data = JSON.stringify({'state': state, 'city': city})
     
             if(city){
                 $.ajax({
@@ -185,9 +187,10 @@
                             address = row["Laboratory Name"]+","+row["City"]+","+row["State"]
                             latitude = row["lat"]
                             longitude = row ["lng"]
+                            directions = "<a href=https://www.google.com/maps/search/?api=1&query="+encodeURI(row["Formatted_address"])+">Directions</a>";
                             if(latitude && longitude){
                                 
-                                pin_marker =  {lat: latitude, lng: longitude, title:row["Laboratory Name"]}
+                                pin_marker =  {lat: latitude, lng: longitude, title:row["Laboratory Name"],address:row["Formatted_address"],directions:directions}
                                 pin_marker_collection.push(pin_marker); 
                             }
                             // google = encodeURI('https://maps.googleapis.com/maps/api/staticmap?center="'+address+'"&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44');
@@ -222,6 +225,7 @@
                 }).done(function (data) {
                     // console.log(data)
                     $('#cityList').empty()
+                    $('#cityList').prop("disabled", false);
                     populateCitySelect(data.results);
                 });
             }
@@ -261,8 +265,10 @@
 
         $( "#cityList" ).change(function() {
             city = $("#cityList").val();
-            if(city){
-                populateCityData(city)
+            state = $("#stateList").val();
+            
+            if(city&&state){
+                populateCityData(city,state)
             }
         });
 
