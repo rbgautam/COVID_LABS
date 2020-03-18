@@ -26,51 +26,100 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <style>
+    /* Set the size of the div element that contains the map */
+   #map {
+     height: 400px;  /* The height is 400 pixels */
+     width: 100%;  /* The width is the width of the web page */
+    }
+ </style>
 </head>
+<body>
+    <!-- {{ form.autocomp2.label }}: {{ form.autocomp2 }}
+    {{ form.autocomp.label }}: {{ form.autocomp }} -->
+    <div id="map"></div>
 
-<!-- {{ form.autocomp2.label }}: {{ form.autocomp2 }}
-{{ form.autocomp.label }}: {{ form.autocomp }} -->
-<form>
-    <fieldset>
-       <legend>Select State and City</legend>
-       <p>
-          <label>Select State</label>
-          <select id = "stateList">
-            <option value="0">Select</option>
-          </select>
-          <label>Select City</label>
-          <select id = "cityList">
-           
-          </select>
-       </p>
-    </fieldset>
- </form>
-<br/><br/>
-<hr/>
-<!-- <img id='locMap' src='https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=[replace_key]'/>
-<hr/> -->
-<div class="table100 ver1 m-b-110">
-    <div class="table100-head">
-        <table>
-            <thead>
-                <tr class="row100 head">
-                    <th class="cell100 column1">Laboratory Name</th>
-                    <th class="cell100 column2">Address</th> 
-                    <th class="cell100 column3">City</th>
-                    <th class="cell100 column4">State</th>
-                    <!-- <th class="cell100 column5">Zip</th>  -->
-                    <!-- <th class="cell100 column4">Map</th> -->
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="table100-body js-pscroll">
-        <table id="records_table">
+    <form>
+        <fieldset>
+        <legend>Select State and City</legend>
+        <p>
+            <label>Select State</label>
+            <select id = "stateList">
+                <option value="0">Select</option>
+            </select>
+            <label>Select City</label>
+            <select id = "cityList">
             
-        </table>
+            </select>
+        </p>
+        </fieldset>
+    </form>
+    <br/><br/>
+    <hr/>
+    <!-- <img id='locMap' src='https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=[replace_key]'/>
+    <hr/> -->
+    <div class="table100 ver1 m-b-110">
+        <div class="table100-head">
+            <table>
+                <thead>
+                    <tr class="row100 head">
+                        <th class="cell100 column1">Laboratory Name</th>
+                        <th class="cell100 column2">State</th> 
+                        <th class="cell100 column3">Address</th>
+                        <th class="cell100 column4">City</th>
+                        <!-- <th class="cell100 column5">Zip</th>  -->
+                        <!-- <th class="cell100 column4">Map</th> -->
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="table100-body js-pscroll">
+            <table id="records_table">
+                
+            </table>
+        </div>
     </div>
-</div>
+</body>
 <script>
+    // Initialize and add the map
+    function initMap() {
+      //center of USA LEbanon,KS
+      //39.8097, -98.5556
+      var center = {lat: 39.8097, lng: -98.5556};
+      // The location of altlanta
+      
+      var atlanta = {lat: 33.7490, lng: -84.3880};
+      ////41.8781,87.6298
+      var chicago = {lat: 41.8781, lng: -87.6298};
+      
+      // The map, centered at atlanta
+      var map = new google.maps.Map(
+          document.getElementById('map'), {zoom: 4, center: center});
+      // The marker, positioned at Uluru
+      var marker = new google.maps.Marker({position: atlanta, map: map});
+      var marker = new google.maps.Marker({position: chicago, map: map});
+    }
+
+    function updateMap(pin_marker_collection) {
+        //center of USA LEbanon,KS
+        //39.8097, -98.5556
+        var center =pin_marker_collection[0];
+        
+        var map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 20, center: center});
+        //Create LatLngBounds object.
+        var latlngbounds = new google.maps.LatLngBounds();
+        pin_marker_collection.forEach(element => {
+            var latlng = new google.maps.LatLng(element.lat, element.lng);
+            var marker = new google.maps.Marker({position: latlng, map: map,title:element.title});
+            latlngbounds.extend(marker.position);
+        });
+
+        //Center map and adjust Zoom based on the position of all markers.
+        map.setCenter(latlngbounds.getCenter());
+        map.fitBounds(latlngbounds);
+    }    
+        
     $(function() {
         $( "#autocity" ).focusout(function(event,data) {
             console.log($("#autocity").val())
@@ -129,15 +178,22 @@
                     // console.log(response.results)
                     var trHTML = '';
                     $('#records_table tr').remove()
+                    pin_marker_collection =[]
                     $.each(response, function (i, item) {
                         // trHTML += "<thead><td>Laboratory Name</td><td>City</td><td>State</td></thead>";
                         $.each(item,function (i, row){
                             address = row["Laboratory Name"]+","+row["City"]+","+row["State"]
-                           
-                            google = encodeURI('https://maps.googleapis.com/maps/api/staticmap?center="'+address+'"&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44');
-                            console.log(google)
+                            latitude = row["lat"]
+                            longitude = row ["lng"]
+                            if(latitude && longitude){
+                                
+                                pin_marker =  {lat: latitude, lng: longitude, title:row["Laboratory Name"]}
+                                pin_marker_collection.push(pin_marker); 
+                            }
+                            // google = encodeURI('https://maps.googleapis.com/maps/api/staticmap?center="'+address+'"&zoom=14&size=400x400&key=AIzaSyDYnBx8lUCLmIeOp7lF4Q1vv32tfUH-S44');
+                            // console.log(google)
                             
-                            trHTML += '<tr class="row100 body"><td class="cell100 column1">' + row["Laboratory Name"] +'</td><td class="cell100 column2">' + row["Formatted_address"] + '</td><td class="cell100 column3">' + row["City"] + '</td><td class="cell100 column4">' + row["State"]+ '</td>';
+                            trHTML += '<tr class="row100 body"><td class="cell100 column1">' + row["Laboratory Name"]+ '</td><td class="cell100 column2">' + row["State"] +'</td><td class="cell100 column3">' + row["Formatted_address"] + '</td><td class="cell100 column4">' + row["City"] + '</td>';
                             // trHTML +="<td class='cell100 column5'><a href='"+google+"' onclick='disableClick()' >Directions</a></td>"
                             // trHTML += '<td class="cell100 column5">' + row["Zip_code"] +'</td>'
                             trHTML +="</tr>";
@@ -146,6 +202,7 @@
                         
                     });
                     $('#records_table').append(trHTML);
+                    updateMap(pin_marker_collection); 
                 }
                 
                 });
@@ -244,4 +301,11 @@
             $(element).css(attrib, val);
         };
         });
+</script>
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVTNW2QjhnjmptFTP-fmpJdCEKtyJMNYo&callback=initMap">
 </script>

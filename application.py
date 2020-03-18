@@ -1,8 +1,7 @@
-import pandas as pd
 from flask import Flask, jsonify, request,render_template
 from dataaccess  import read_from_csv,read_city_from_csv,read_state_from_csv,read_city_from_state
 from wtforms import TextField, Form
-from flask_cors import CORS
+
 
 # app
 app = Flask(__name__)
