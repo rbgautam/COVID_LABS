@@ -15,6 +15,14 @@ def searchform():
     form = SearchForm(request.form)
     return render_template("search.html",form=form)
 
+@app.route('/index')
+def index():
+    return render_template("index.html")
+
+@app.route('/sample')
+def sample():
+    return render_template("sample.html")
+
 @app.route("/chart")
 def chart():
     legend = 'Monthly Data'
