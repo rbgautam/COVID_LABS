@@ -17,7 +17,7 @@ def searchform():
 @app.route('/index')
 def index():
     form = SearchForm(request.form)
-    return render_template("search.html",form=form)
+    return render_template("index.html",form=form)
     
 
 @app.route('/sample')
