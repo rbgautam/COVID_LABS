@@ -116,11 +116,9 @@ body:after {
       font-size: 3rem; } }
 
 .site-footer {
-  padding: 4em 0;
   background: #333333; }
   @media (min-width: 768px) {
-    .site-footer {
-      padding: 8em 0; } }
+    }
   .site-footer .border-top {
     border-top: 1px solid rgba(255, 255, 255, 0.1) !important; }
   .site-footer p {
@@ -236,8 +234,6 @@ body:after {
       left: 0;
       font-size: 20px;
       top: -.3rem;
-      font-family: "icomoon";
-      content: "\e5ca";
       position: absolute; }
   .ul-check.white li:before, .ul-paw.white li:before {
     color: #fff; }
@@ -246,8 +242,7 @@ body:after {
   .ul-check.primary li:before, .ul-paw.primary li:before {
     color: #a2c0be; }
 
-.ul-paw li:before {
-  content: "\f1b0"; }
+
 
 .select-wrap, .wrap-icon {
   position: relative; }

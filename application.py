@@ -12,12 +12,13 @@ class SearchForm(Form):
 # routes
 @app.route('/')
 def searchform():
-    form = SearchForm(request.form)
-    return render_template("search.html",form=form)
+    return render_template("index.html")
 
 @app.route('/index')
 def index():
-    return render_template("index.html")
+    form = SearchForm(request.form)
+    return render_template("search.html",form=form)
+    
 
 @app.route('/sample')
 def sample():
