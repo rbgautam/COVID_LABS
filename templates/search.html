@@ -35,8 +35,10 @@
  </style>
 </head>
 <body>
+    <div class="container">
     <!-- {{ form.autocomp2.label }}: {{ form.autocomp2 }}
     {{ form.autocomp.label }}: {{ form.autocomp }} -->
+    <h2>COVID-19 Testing Labs US<sup>*</sup></h2>
     <div id="map"></div>
 
     <form>
@@ -54,7 +56,11 @@
         </p>
         </fieldset>
     </form>
-    <br/><br/>
+    <br/>
+    <b>Click on the Marker to get directions</b></br>
+    <sup>*</sup>Content-source : <a target='_new' href= 'https://www.aphl.org/programs/preparedness/Crisis-Management/Pages/2019-nCoV.aspx'>https://www.aphl.org/programs/preparedness/Crisis-Management/Pages/2019-nCoV.aspx</a> <br/>
+    <a href= 'https://www.aphl.org/programs/preparedness/Crisis-Management/Documents/CLIA%20COC%20and%20COA%20Labs%20w_Virology_Subspecialty_3-6-2020.xlsx'>https://www.aphl.org/programs/preparedness/Crisis-Management/Documents/CLIA%20COC%20and%20COA%20Labs%20w_Virology_Subspecialty_3-6-2020.xlsx</a>
+    <br/>
     <hr/>
     <!-- <img id='locMap' src='https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=[replace_key]'/>
     <hr/> -->
@@ -79,6 +85,7 @@
             </table>
         </div>
     </div>
+</div>
 </body>
 <script>
     // Initialize and add the map
@@ -96,8 +103,8 @@
       var map = new google.maps.Map(
           document.getElementById('map'), {zoom: 4, center: center});
       // The marker, positioned at Uluru
-      var marker = new google.maps.Marker({position: atlanta, map: map});
-      var marker = new google.maps.Marker({position: chicago, map: map});
+      var marker = new google.maps.Marker({position: atlanta, map: map,title:'CDC'});
+    //   var marker = new google.maps.Marker({position: chicago, map: map});
     }
 
     function updateMap(pin_marker_collection) {
@@ -106,7 +113,7 @@
         var center =pin_marker_collection[0];
         
         var map = new google.maps.Map(
-            document.getElementById('map'), {zoom: 20, center: center});
+            document.getElementById('map'), {zoom: 5, center: center});
         //Create LatLngBounds object.
         var latlngbounds = new google.maps.LatLngBounds();
         //Used by click listner
@@ -147,18 +154,18 @@
             }
         });
        
-        function disableClick() {
-            $("a").click(function(e) {
+        // function disableClick() {
+        //     $("a").click(function(e) {
             
-            e.stopImmediatePropagation();
+        //     e.stopImmediatePropagation();
         
-            console.log("a clicked");
-            // $( "<div>" )
-            //     .append( "default " + event.type + " prevented" )
-            //     .appendTo( "#log" );
-            return false;
-            });
-        }
+        //     console.log("a clicked");
+        //     // $( "<div>" )
+        //     //     .append( "default " + event.type + " prevented" )
+        //     //     .appendTo( "#log" );
+        //     return false;
+        //     });
+        // }
       
         function showMap(address) {
             console.log(address);
@@ -214,7 +221,7 @@
         }
 
         $(document).ready(function(){
-            disableClick();
+            // disableClick();
         });
 
         function handleCity(params) {
