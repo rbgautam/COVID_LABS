@@ -89,5 +89,10 @@ def get_city_from_state_list():
     result = read_city_from_state(data)
     return jsonify(results=result)
 
+@app.route('/getcovidstatedata', methods=['GET'])
+def getcovidstatedata():
+      
+
+
 if __name__ == '__main__':
     app.run(port = 5000, debug=True)
