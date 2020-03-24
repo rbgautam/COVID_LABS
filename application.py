@@ -91,7 +91,7 @@ def get_city_from_state_list():
 
 @app.route('/getcovidstatedata', methods=['GET'])
 def getcovidstatedata():
-      
+    pass
 
 
 if __name__ == '__main__':
