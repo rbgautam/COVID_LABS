@@ -39,9 +39,11 @@ def read_city_from_csv(city):
 
 def read_city_from_state(state):
     if state != None:
-        result = csv_data[csv_data['State'].str.startswith(state.upper())] 
+        result = csv_data[csv_data['State'].str.startswith(state.upper())]
+        
     else:
         return csv_data['City'].unique().tolist()
+    result = result.sort_values(['City'], ascending = (True)) 
     result = result['City'].unique().tolist()
     # print(result)
     # result = jsonify_result(result)
