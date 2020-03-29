@@ -4,6 +4,15 @@ import json
 file_path = "us_labs_data.csv"
 csv_data = pd.read_csv(file_path)
 
+def authenticate(header):
+    print(header)
+    auth = header.get("X-Api-Key")
+    print(auth,"=",auth)
+    if auth == 'eiWee8ep9due4deeshoa8Peichai8Eih':
+        return True
+    else:
+        return False
+
 def read_from_csv(state,city):
     try:
         result = None
