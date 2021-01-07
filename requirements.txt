@@ -3,7 +3,7 @@ beautifulsoup4==4.6.0
 docutils==0.14
 flask>=1.0.0
 jmespath==0.9.3
-lxml==4.5.0
+lxml==4.6.2
 multitasking==0.0.9
 numpy==1.17.4
 pandas==1.0.1
