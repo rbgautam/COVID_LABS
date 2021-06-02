@@ -13,7 +13,7 @@ pyparsing==2.4.5
 python-dateutil==2.7.3
 requests==2.22.0
 semantic-version==2.5.0
-urllib3==1.25.8
+urllib3==1.26.5
 wcwidth==0.1.7
 websocket-client==0.48.0
 gunicorn>=19.5.0
